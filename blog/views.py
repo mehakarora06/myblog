@@ -2,12 +2,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Post
 from .forms import SignupForm, PostForm
+from django.contrib.auth import logout
 
 
 # 🏠 HOME (Public - anyone can see)
 def home(request):
     posts = Post.objects.all()
     return render(request, 'home.html', {'posts': posts})
+
+def custom_logout(request):
+    logout(request)
+    return redirect('/login/')
 
 
 # 🔐 SIGNUP
