@@ -5,7 +5,7 @@ from .forms import SignupForm, PostForm
 from django.contrib.auth import logout
 
 
-# 🏠 HOME (Public - anyone can see)
+
 def home(request):
     posts = Post.objects.all()
     return render(request, 'home.html', {'posts': posts})
@@ -15,7 +15,7 @@ def custom_logout(request):
     return redirect('/login/')
 
 
-# 🔐 SIGNUP
+
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -30,7 +30,6 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
-# ✍️ CREATE POST
 @login_required
 def create_post(request):
     if request.method == 'POST':
@@ -46,12 +45,12 @@ def create_post(request):
     return render(request, 'create_post.html', {'form': form})
 
 
-# ✏️ EDIT POST
+
 @login_required
 def edit_post(request, id):
     post = get_object_or_404(Post, id=id)
 
-    # 🔒 Only author can edit
+   
     if post.author != request.user:
         return redirect('/')
 
@@ -66,12 +65,12 @@ def edit_post(request, id):
     return render(request, 'edit_post.html', {'form': form})
 
 
-# 🗑️ DELETE POST
+
 @login_required
 def delete_post(request, id):
     post = get_object_or_404(Post, id=id)
 
-    # 🔒 Only author can delete
+
     if post.author != request.user:
         return redirect('/')
 
